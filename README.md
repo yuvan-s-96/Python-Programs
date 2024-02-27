@@ -13,7 +13,7 @@ This Python script, `JugsMugsPugs.py`, provides functionality to print "Jugs", "
 2. Open a terminal or command prompt.
 3. Navigate to the directory where `JugsMugsPugs.py` is located.
 4. Run the script by executing the following command:
-  ''' python JugsMugsPugs.py '''
+   *** python JugsMugsPugs.py ***
 Follow the on-screen instructions to enter a number and choose whether to print in reverse order or normal order.
 ### Functionality
 The script provides two functions:
