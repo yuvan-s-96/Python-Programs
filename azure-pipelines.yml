@@ -1,7 +1,3 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
 - main
@@ -9,19 +5,36 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.11.2'
+stages:
+- stage: PythonPackage
+  displayName: 'Python Package Stage'
+  jobs:
+  - job: PythonJob
+    displayName: 'Python Job'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.11.2'
 
+    - checkout: self  
+      persistCredentials: true  
 
+    - task: PythonScript@0
+      displayName: 'Execute Python script'
+      inputs:
+        scriptSource: 'filePath'
+        scriptPath: 'hello.py'  # Update this with the actual path to your Python script within the repository
 
-- checkout: self  # This step checks out your repository
-  persistCredentials: true  # If your repository requires credentials, this ensures they're persisted for subsequent steps
-
-- task: PythonScript@0
-  displayName: 'Execute Python script'
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: 'hello.py'  # Update this with the actual path to your Python script within the repository
+- stage: MavenBuild
+  displayName: 'Maven Build Stage'
+  jobs:
+  - job: MavenJob
+    displayName: 'Maven Job'
+    steps:
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'pom.xml'  # Path to your Maven POM file
+        goals: 'clean package'  # Maven goals to execute
+        options: '-Xmx3072m'  # Optional Maven command-line options
+        publishJUnitResults: true  # Publish JUnit test results if available
 
