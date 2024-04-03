@@ -23,5 +23,5 @@ steps:
   displayName: 'Execute Python script'
   inputs:
     scriptSource: 'filePath'
-    scriptPath: 'jugsmugspugs.py'  # Update this with the actual path to your Python script within the repository
+    scriptPath: 'hello.py'  # Update this with the actual path to your Python script within the repository
 
